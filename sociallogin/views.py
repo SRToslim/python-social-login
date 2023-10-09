@@ -8,7 +8,6 @@ from django.shortcuts import redirect
 
 from helpbazar import settings
 from userauth.models import User, Profile
-from userauth.utils import get_client_ip, get_client_os_info, get_client_browser_info, get_client_device_info
 
 
 def google_login(request):
@@ -55,10 +54,6 @@ def google_callback(request):
         if user:
             user.social_id = user_info['sub']
             user.social_provider = 'Google'
-            user.last_ip = get_client_ip(request)
-            user.client_os_info = get_client_os_info(request)
-            user.client_browser_info = get_client_browser_info(request)
-            user.get_client_device_info = get_client_device_info(request)
             user.is_online = True
             user.save()
 
@@ -87,10 +82,6 @@ def google_callback(request):
             user.is_active = True
             user.is_verify = True
             user.is_online = True
-            user.ip = get_client_ip(request)
-            user.client_os_info = get_client_os_info(request)
-            user.client_browser_info = get_client_browser_info(request)
-            user.get_client_device_info = get_client_device_info(request)
             user.save()
 
             profile = Profile.objects.create(user=user)
@@ -140,10 +131,6 @@ def facebook_callback(request):
     if user:
         user.social_id = user_data['id']
         user.social_provider = 'Facebook'
-        user.last_ip = get_client_ip(request)
-        user.client_os_info = get_client_os_info(request)
-        user.client_browser_info = get_client_browser_info(request)
-        user.get_client_device_info = get_client_device_info(request)
         user.is_online = True
         user.save()
         profile, created = Profile.objects.get_or_create(user=user)
@@ -174,10 +161,6 @@ def facebook_callback(request):
         user.is_active = True
         user.is_verify = True
         user.is_online = True
-        user.ip = get_client_ip(request)
-        user.client_os_info = get_client_os_info(request)
-        user.client_browser_info = get_client_browser_info(request)
-        user.get_client_device_info = get_client_device_info(request)
         user.save()
 
         profile = Profile.objects.create(user=user, full_name=user_data['name'])
@@ -235,10 +218,6 @@ def github_callback(request):
         if user:
             user.social_id = user_data['id']
             user.social_provider = 'Github'
-            user.last_ip = get_client_ip(request)
-            user.client_os_info = get_client_os_info(request)
-            user.client_browser_info = get_client_browser_info(request)
-            user.get_client_device_info = get_client_device_info(request)
             user.is_online = True
             user.save()
             profile, created = Profile.objects.get_or_create(user=user)
@@ -264,10 +243,6 @@ def github_callback(request):
             user.is_active = True
             user.is_verify = True
             user.is_online = True
-            user.ip = get_client_ip(request)
-            user.client_os_info = get_client_os_info(request)
-            user.client_browser_info = get_client_browser_info(request)
-            user.get_client_device_info = get_client_device_info(request)
             user.save()
             profile = Profile.objects.create(user=user)
             profile.full_name = user_data.get('name') or user_data.get('login')
